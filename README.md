@@ -1,18 +1,21 @@
 # Short description
-CustomBusinessRule + sample application for retrieving report data as an html table to send it via mail
+Custom Business Rule + sample application for retrieving report data as an html table to send it via mail.
 
 # Custom Business Rule for retrieving report data
 ## State
 Beta version, needs more testing but works quite well.
 ## Remarks 
-An `InternalError: Object reference not set to an instance of an object.` may be thrown if:
-- The user does not have permissions for the (private) view / the view does not exist
-- Some fields/calculated fields will cause this error, when the report data is retrieved using the API
-- The columns Step, Form and Workflow return the Id instead of the name. A workaround for this is to create a calculated field which just returns STP_Name,DTYPE_Name,WF_Name
-- For some reason the default `created` columns cause an error, but a calculated field returning the value does work
+1. An `InternalError: Object reference not set to an instance of an object.` may be thrown if:
+    -  The user does not have permissions for the (private) view / the view does not exist
+    - Some fields/calculated fields will cause this error, when the report data is retrieved using the API
+    - For some reason the default `created` columns cause an error, but a calculated field returning the value does work
+
+If this error is throws you can verify that the error is caused by the API by using the OpenAPI interface at [Portal_address]/api
+
+2. The columns Step, Form and Workflow return the Id instead of the name. A workaround for this is to create a calculated field which just returns STP_Name,DTYPE_Name,WF_Name
 
 ## Sample SQL statement executed for a report
-Calculated columns are name underscoreNumber _##
+The below statement is executed once a report is accessed. Calculated columns are named underscoreNumber (_##) and added to the statement.
 ```sql
 exec sp_executesql N' SELECT * FROM (
 SELECT
@@ -51,7 +54,9 @@ ISNULL(TranslatesWorkflows.TRANS_Name,ISNULL(SecondaryTranslatesWorkflows.TRANS_
 WF_ID,
 CONVERT(varchar(16),WFD_TSInsert, 121) as WFD_TSInsert,
 CONVERT(varchar(16),WFD_TSInsert, 121) as WFD_TSInsert_DateOnly,
-WFD_TsInsert as _1 /*ROWNUMBER*/ , ROW_NUMBER() OVER ( ORDER BY WFD_ID DESC ) as RowNumber /*ROWNUMBER_END*/                        
+WFD_TsInsert as _1 
+/*ROWNUMBER*/ 
+, ROW_NUMBER() OVER ( ORDER BY WFD_ID DESC ) as RowNumber /*ROWNUMBER_END*/                        
   /*COLUMNS_END*/
 FROM V_WFElements as wfelems
     
