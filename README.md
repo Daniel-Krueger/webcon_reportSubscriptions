@@ -7,7 +7,7 @@ Beta version, needs more testing but works quite well.
 ## Remarks 
 1. An `InternalError: Object reference not set to an instance of an object.` may be thrown if:
     -  The user does not have permissions for the (private) view / the view does not exist
-    - Some fields/calculated fields will cause this error, when the report data is retrieved using the API
+    - Some fields/calculated fields will cause this error, when the report data is retrieved using the API. This needs more testing to identify the problems.
     - For some reason the default `created` columns cause an error, but a calculated field returning the value does work
 
 If this error is throws you can verify that the error is caused by the API by using the OpenAPI interface at [Portal_address]/api

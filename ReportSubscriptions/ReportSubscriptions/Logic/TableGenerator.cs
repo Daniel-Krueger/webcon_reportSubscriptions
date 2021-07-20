@@ -73,7 +73,8 @@ namespace ReportSubscriptions.Logic
                             }
                             // Handle picker columns
                             else if (data.Columns[columnCounter].Type != null &&
-                                (data.Columns[columnCounter].Type.Contains("Choice") || data.Columns[columnCounter].Type.Equals("People")))
+                                (data.Columns[columnCounter].Type.Contains("Choice") || data.Columns[columnCounter].Type.Equals("People")
+                                || data.Columns[columnCounter].Type.Equals("Autocomplete")))
                             {
                                 var matches = choicePattern.Matches(rowValue);
 
