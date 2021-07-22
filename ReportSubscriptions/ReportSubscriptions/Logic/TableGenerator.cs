@@ -34,7 +34,7 @@ namespace ReportSubscriptions.Logic
                     thead.AddCell("Instance");
                     foreach (var column in data.Columns)
                     {
-                        thead.AddCell(column.Name, id: column.Type);
+                        thead.AddCell(column.Name, classAttributes: column.Type);
                     }
                 }
                 table.EndHead();
